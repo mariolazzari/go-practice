@@ -1,1 +1,1 @@
-# go-practice
+# Go practice
