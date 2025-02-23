@@ -1,27 +1,39 @@
 package main
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
 	avg, err := CalculateMean([]int{1, 2, 3})
+	printResults(avg, err)
+
+	avg, err = CalculateMean([]int{})
+	printResults(avg, err)
+
+	avg, err = CalculateMean([]int{123, 123, 2, 3})
+	printResults(avg, err)
+}
+
+func printResults(avg *float64, err error) {
 	if err != nil {
-		println("error", err)
+		fmt.Printf("error: %v\n", err)
 		return
 	}
-	print("mean:", *avg)
+	fmt.Println("mean:", *avg)
 }
 
 // CalculateMean returns mean of the numbers slice, or an error.
 func CalculateMean(numbers []int) (*float64, error) {
-	// Your code goes here.
-	mean := 0.0
+	sum := 0
 	for _, n := range numbers {
-		mean += float64(n)
+		sum += n
 	}
-	if mean == 0 {
+	if sum == 0 {
 		return nil, errors.New("empty array")
 	}
-	mean /= float64(len(numbers))
+	mean := float64(sum / len(numbers))
 
 	return &mean, nil
 }
